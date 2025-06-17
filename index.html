@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PI Labs AI Interview Preparation Checklist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #00c851, #00ff41);
+            height: 100%;
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px 25px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-content {
+            padding: 25px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .checklist-item:hover {
+            background: rgba(102, 126, 234, 0.05);
+            border-color: rgba(102, 126, 234, 0.2);
+        }
+
+        .checklist-item.completed {
+            background: rgba(0, 200, 81, 0.1);
+            border-color: rgba(0, 200, 81, 0.3);
+        }
+
+        .checkbox-container {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .checkbox {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .checkbox:checked {
+            background: linear-gradient(135deg, #00c851, #00ff41);
+            border-color: #00c851;
+        }
+
+        .checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .task-text {
+            flex: 1;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .task-text.completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .subsection {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .subsection-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reset-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .checklist-item {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✅ PI LABS.AI Interview Prep</h1>
+            <p>Complete checklist for your technical interview preparation</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">0% Complete (0/0 tasks)</div>
+        </div>
+
+        <div class="content">
+            <!-- Company & Domain Understanding -->
+            <div class="section">
+                <div class="section-header">
+                    📌 1. Company & Domain Understanding
+                </div>
+                <div class="section-content">
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Read about <strong>pi_labs.ai's core mission and products</strong> (Securechain, Authentify, Scout, Sense)</div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Understand the <strong>problem domains</strong>: deepfake detection, forensic evidence, blockchain, surveillance analytics</div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Research <strong>how AI is used in public safety, security, and law enforcement</strong></div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Study current industry trends in <strong>AI video analysis, deepfake detection, and blockchain forensics</strong></div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Review the company's <strong>LinkedIn page and employee profiles</strong> to know their team structure</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Core Technical Concepts -->
+            <div class="section">
+                <div class="section-header">
+                    🧠 2. Core Technical Concepts Review
+                </div>
+                <div class="section-content">
+                    <div class="subsection">
+                        <div class="subsection-title">📸 Computer Vision & Video AI</div>
+                        <div class="checklist-item" onclick="toggleTask(this)">
+                            <div class="checkbox-container">
+                                <input type="checkbox" class="checkbox">
+                            </div>
+                            <div class="task-text">Review <strong>CNNs, YOLO (v5/v8), EfficientNet</strong>, etc.</div>
+                        </div>
+                        <div class="checklist-item" onclick="toggleTask(this)">
+                            <div class="checkbox-container">
+                                <input type="checkbox" class="checkbox">
+                            </div>
+                            <div class="task-text">Understand <strong>object detection vs. tracking (YOLO vs. DeepSORT)</strong></div>
+                        </div>
+                        <div class="checklist-item" onclick="toggleTask(this)">
+                            <div class="checkbox-container">
+                                <input type="checkbox" class="checkbox">
+                            </div>
+                            <div class="task-text">Learn about <strong>deepfake detection methods</strong> (GANs, face inconsistencies, eye blinks, frequency domain)</div>
+                        </div>
+                        <div class="checklist-item" onclick="toggleTask(this)">
+                            <div class="checkbox-container">
+                                <input type="checkbox" class="checkbox">
+                            </div>
+                            <div class="task-text">Practice <strong>image/video frame processing using OpenCV</strong></div>
+                        </div>
+                        <div class="checklist-item" onclick="toggleTask(this)">
+                            <div class="checkbox-container">
+                                <input type="checkbox" class="checkbox">
+                            </div>
+                            <div class="task-text">Understand <strong>frame sampling and temporal features in videos</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <div class="subsection-title">🧾 NLP & Audio</div>
+                        <div class="checklist-item" onclick="toggleTask(this)">
+                            <div class="checkbox-container">
+                                <input type="checkbox" class="checkbox">
+                            </div>
+                            <div class="task-text">Revise basics of <strong>NER, text summarization, OCR tools (Tesseract/EasyOCR)</strong></div>
+                        </div>
+                        <div class="checklist-item" onclick="toggleTask(this)">
+                            <div class="checkbox-container">
+                                <input type="checkbox" class="checkbox">
+                            </div>
+                            <div class="task-text">Practice <strong>speech-to-text tools</strong> like Whisper or wav2vec</div>
+                        </div>
+                        <div class="checklist-item" onclick="toggleTask(this)">
+                            <div class="checkbox-container">
+                                <input type="checkbox" class="checkbox">
+                            </div>
+                            <div class="task-text">Know how to handle <strong>multimodal input (audio, video, text)</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <div class="subsection-title">🔗 Blockchain & Evidence Management</div>
+                        <div class="checklist-item" onclick="toggleTask(this)">
+                            <div class="checkbox-container">
+                                <input type="checkbox" class="checkbox">
+                            </div>
+                            <div class="task-text">Learn about <strong>hashing, digital signatures, and blockchain fundamentals</strong></div>
+                        </div>
+                        <div class="checklist-item" onclick="toggleTask(this)">
+                            <div class="checkbox-container">
+                                <input type="checkbox" class="checkbox">
+                            </div>
+                            <div class="task-text">Understand <strong>how to use blockchain for tamper-proof evidence logging</strong></div>
+                        </div>
+                        <div class="checklist-item" onclick="toggleTask(this)">
+                            <div class="checkbox-container">
+                                <input type="checkbox" class="checkbox">
+                            </div>
+                            <div class="task-text">Optionally explore <strong>IPFS or web3.py</strong> basics</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Preparation -->
+            <div class="section">
+                <div class="section-header">
+                    🛠️ 3. Project Preparation
+                </div>
+                <div class="section-content">
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Prepare to discuss your <strong>Financial Agent project</strong>: LSTM + LLM + News APIs</div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Pick 1–2 more relevant projects (e.g., surveillance, OCR, face detection) to talk about</div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Be ready to explain your <strong>architecture, tech stack, challenges, and impact</strong></div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Make a 2-min pitch for each project using the STAR format (Situation, Task, Action, Result)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coding and Problem-Solving -->
+            <div class="section">
+                <div class="section-header">
+                    📄 4. Coding and Problem-Solving
+                </div>
+                <div class="section-content">
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Practice <strong>2–3 Python mini projects</strong> (object detection, image manipulation, LLM integration)</div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Review your understanding of <strong>REST APIs, OpenAI/Claude integration, LangChain basics</strong></div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Brush up on basic <strong>DSA (lists, dicts, loops, file handling)</strong> in Python</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mock Questions & System Design -->
+            <div class="section">
+                <div class="section-header">
+                    🎯 5. Mock Questions & System Design
+                </div>
+                <div class="section-content">
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Prepare for: "How would you build a system to detect video tampering?"</div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Prepare for: "How would you track evidence using blockchain?"</div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Prepare for: "How do you detect deepfakes using AI?"</div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Prepare for: "How do you design a pipeline to extract insights from videos/audio/text?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Behavioral and HR Questions -->
+            <div class="section">
+                <div class="section-header">
+                    🧑‍💼 6. Behavioral and HR Questions
+                </div>
+                <div class="section-content">
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">"Tell me about yourself" – Prepare a 60-second intro aligned with pi_labs' goals</div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">"Why pi_labs.ai?" – Connect your interest with their mission</div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">"Tell me about a time you solved a technical challenge" – Pick 1–2 examples</div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">"What are your long-term goals?" – Align with AI/forensic/agentic tech</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questions to Ask -->
+            <div class="section">
+                <div class="section-header">
+                    ❓ 7. Questions to Ask the Interviewer
+                </div>
+                <div class="section-content">
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Prepare 2–3 good questions such as:<br>• "What are the biggest challenges you face in scaling AI for law enforcement?"<br>• "How do agents at pi_labs integrate across media (text/audio/video)?"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logistics & Mindset -->
+            <div class="section">
+                <div class="section-header">
+                    🧳 8. Logistics & Mindset
+                </div>
+                <div class="section-content">
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Prepare your <strong>resume and projects folder</strong></div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Check your internet, laptop setup, and camera (if remote)</div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Get a good night's sleep before the interview</div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Bring a notebook and pen to the interview</div>
+                    </div>
+                    <div class="checklist-item" onclick="toggleTask(this)">
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                        </div>
+                        <div class="task-text">Practice <strong>confident body language and eye contact</strong> (if in-person or virtual)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="reset-btn" onclick="resetAllTasks()">🔄 Reset All</button>
+
+    <script>
+        let totalTasks = 0;
+        let completedTasks = 0;
+
+        function initializeChecklist() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            totalTasks = checkboxes.length;
+            
+            // Load saved state
+            checkboxes.forEach((checkbox, index) => {
+                const saved = localStorage.getItem(`task_${index}`);
+                if (saved === 'true') {
+                    checkbox.checked = true;
+                    checkbox.closest('.checklist-item').classList.add('completed');
+                    checkbox.nextElementSibling.classList.add('completed');
+                    completedTasks++;
+                }
+            });
+            
+            updateProgress();
+        }
+
+        function toggleTask(item) {
+            const checkbox = item.querySelector('.checkbox');
+            const taskText = item.querySelector('.task-text');
+            
+            checkbox.checked = !checkbox.checked;
+            
+            if (checkbox.checked) {
+                item.classList.add('completed');
+                taskText.classList.add('completed');
+                completedTasks++;
+            } else {
+                item.classList.remove('completed');
+                taskText.classList.remove('completed');
+                completedTasks--;
+            }
+            
+            // Save state
+            const checkboxes = Array.from(document.querySelectorAll('.checkbox'));
+            const index = checkboxes.indexOf(checkbox);
+            localStorage.setItem(`task_${index}`, checkbox.checked);
+            
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            progressFill.style.width = percentage + '%';
+            progressText.textContent = `${percentage}% Complete (${completedTasks}/${totalTasks} tasks)`;
+            
+            // Change color based on progress
+            if (percentage === 100) {
+                progressFill.style.background = 'linear-gradient(90deg, #00c851, #00ff41)';
+            } else if (percentage >= 75) {
+                progressFill.style.background = 'linear-gradient(90deg, #ffa726, #ff9800)';
+            } else if (percentage >= 50) {
+                progressFill.style.background = 'linear-gradient(90deg, #42a5f5, #2196f3)';
+            } else {
+                progressFill.style.background = 'linear-gradient(90deg, #ef5350, #f44336)';
+            }
+        }
+
+        function resetAllTasks() {
+            if (confirm('Are you sure you want to reset all tasks? This will uncheck everything.')) {
+                const checkboxes = document.querySelectorAll('.checkbox');
+                const items = document.querySelectorAll('.checklist-item');
+                const taskTexts = document.querySelectorAll('.task-text');
+                
+                checkboxes.forEach((checkbox, index) => {
+                    checkbox.checked = false;
+                    localStorage.removeItem(`task_${index}`);
+                });
+                
+                items.forEach(item => item.classList.remove('completed'));
+                taskTexts.forEach(text => text.classList.remove('completed'));
+                
+                completedTasks = 0;
+                updateProgress();
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initializeChecklist);
+
+        // Prevent checkbox from being toggled twice when clicking on it directly
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('checkbox')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
